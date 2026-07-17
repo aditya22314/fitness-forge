@@ -3,6 +3,9 @@ import { AppLayout } from "@/components/AppLayout";
 import { GlassCard } from "@/components/GlassCard";
 import { useStore } from "@/lib/store";
 import { toast } from "sonner";
+import { useAuth } from "@/lib/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({ meta: [{ title: "Settings — Iron" }] }),
@@ -11,6 +14,13 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const { settings, setSettings, clearAll, history, importData } = useStore();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    toast("Signed out");
+  };
 
   const exportCSV = () => {
     const rows = [
@@ -57,6 +67,33 @@ function SettingsPage() {
   return (
     <AppLayout>
       <h1 className="text-2xl font-bold mb-4">Settings</h1>
+      <GlassCard className="mb-3">
+        <div className="font-semibold mb-2">Account</div>
+        {user ? (
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-sm font-medium truncate">
+                {(user.user_metadata?.full_name as string) || user.email}
+              </div>
+              <div className="text-xs text-muted-foreground truncate">{user.email}</div>
+            </div>
+            <button onClick={signOut} className="px-3 py-2 rounded-md bg-secondary/60 text-sm">
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between gap-3">
+            <div className="text-sm text-muted-foreground">Not signed in</div>
+            <button
+              onClick={() => navigate({ to: "/auth" })}
+              className="px-3 py-2 rounded-md bg-primary text-primary-foreground text-sm"
+            >
+              Sign in with Google
+            </button>
+          </div>
+        )}
+      </GlassCard>
+
       <GlassCard className="mb-3 space-y-3">
         <Row label="Units">
           <select value={settings.units} onChange={(e) => setSettings({ units: e.target.value as "metric" | "imperial" })} className="bg-secondary/60 rounded-md px-2 py-1 text-sm">
