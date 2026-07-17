@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Track workouts, PRs, nutrition, creatine and progress — a premium mobile-first gym tracker." },
       { name: "theme-color", content: "#0f1216" },
       { property: "og:title", content: "Iron — Gym Tracker" },
-      { property: "og:description", content: "Log workouts, hit PRs, and track your progress." },
+      { property: "og:description", content: "Track workouts, PRs, nutrition, creatine and progress — a premium mobile-first gym tracker." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Iron — Gym Tracker" },
+      { name: "twitter:description", content: "Track workouts, PRs, nutrition, creatine and progress — a premium mobile-first gym tracker." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8bb46d8a-d4b6-4d6e-a363-39b76374f5ab/id-preview-d1442f9d--fd0f40b1-7518-434c-9f5f-cdb7a17a78e0.lovable.app-1784272662102.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8bb46d8a-d4b6-4d6e-a363-39b76374f5ab/id-preview-d1442f9d--fd0f40b1-7518-434c-9f5f-cdb7a17a78e0.lovable.app-1784272662102.png" },
     ],
     links: [
       {
