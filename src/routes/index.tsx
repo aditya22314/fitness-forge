@@ -1,15 +1,32 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppLayout } from "@/components/AppLayout";
 import { GlassCard, ProgressRing } from "@/components/GlassCard";
 import { useStore, computeStreak, fmtDuration } from "@/lib/store";
 import { Flame, Timer, Dumbbell, TrendingUp, Play, Trophy } from "lucide-react";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { format, startOfWeek, addDays, isSameDay } from "date-fns";
+import { useEffect } from "react";
+import { useAuth } from "@/lib/useAuth";
 
 export const Route = createFileRoute("/")({ component: Dashboard });
 
 function Dashboard() {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/auth", replace: true });
+  }, [loading, user, navigate]);
+
   const { plans, history, todaysPlanId, goals, measurements, live } = useStore();
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-dvh grid place-items-center">
+        <div className="text-sm text-muted-foreground">Loading…</div>
+      </div>
+    );
+  }
+
   const todaysPlan = plans.find((p) => p.id === todaysPlanId) ?? plans[0];
   const today = new Date();
   const todaysHistory = history.filter((h) => isSameDay(new Date(h.date), today));
