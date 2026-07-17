@@ -61,12 +61,6 @@ function AuthPage() {
           {busy ? "Signing in…" : "Continue with Google"}
         </button>
 
-        <button
-          onClick={() => navigate({ to: "/" })}
-          className="mt-3 w-full text-xs text-muted-foreground hover:text-foreground"
-        >
-          Continue without signing in
-        </button>
       </div>
     </div>
   );
