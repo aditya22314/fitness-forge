@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkoutRouteImport } from './routes/workout'
 import { Route as SupplementsRouteImport } from './routes/supplements'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RepCounterRouteImport } from './routes/rep-counter'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PlannerRouteImport } from './routes/planner'
@@ -30,6 +31,11 @@ const WorkoutRoute = WorkoutRouteImport.update({
 const SupplementsRoute = SupplementsRouteImport.update({
   id: '/supplements',
   path: '/supplements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RepCounterRoute = RepCounterRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
   '/supplements': typeof SupplementsRoute
   '/workout': typeof WorkoutRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
   '/supplements': typeof SupplementsRoute
   '/workout': typeof WorkoutRoute
 }
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
   '/supplements': typeof SupplementsRoute
   '/workout': typeof WorkoutRoute
 }
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/planner'
     | '/progress'
     | '/rep-counter'
+    | '/settings'
     | '/supplements'
     | '/workout'
   fileRoutesByTo: FileRoutesByTo
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/planner'
     | '/progress'
     | '/rep-counter'
+    | '/settings'
     | '/supplements'
     | '/workout'
   id:
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/planner'
     | '/progress'
     | '/rep-counter'
+    | '/settings'
     | '/supplements'
     | '/workout'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   PlannerRoute: typeof PlannerRoute
   ProgressRoute: typeof ProgressRoute
   RepCounterRoute: typeof RepCounterRoute
+  SettingsRoute: typeof SettingsRoute
   SupplementsRoute: typeof SupplementsRoute
   WorkoutRoute: typeof WorkoutRoute
 }
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/supplements'
       fullPath: '/supplements'
       preLoaderRoute: typeof SupplementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rep-counter': {
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlannerRoute: PlannerRoute,
   ProgressRoute: ProgressRoute,
   RepCounterRoute: RepCounterRoute,
+  SettingsRoute: SettingsRoute,
   SupplementsRoute: SupplementsRoute,
   WorkoutRoute: WorkoutRoute,
 }

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 import { EXERCISE_LIBRARY } from "./exercises";
 
 export type Split = "Push" | "Pull" | "Legs" | "Upper" | "Lower" | "Full Body" | "Custom";
@@ -364,7 +364,15 @@ export const useStore = create<StoreState>()(
         set({ ...(data as Partial<StoreState>) } as StoreState);
       },
     }),
-    { name: "gym-tracker-v1" },
+    {
+      name: "gym-tracker-v1",
+      storage: createJSONStorage(() =>
+        typeof window !== "undefined"
+          ? window.localStorage
+          : { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+      ),
+      skipHydration: false,
+    },
   ),
 );
 
