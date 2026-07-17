@@ -9,8 +9,80 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkoutRouteImport } from './routes/workout'
+import { Route as SupplementsRouteImport } from './routes/supplements'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RepCounterRouteImport } from './routes/rep-counter'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as NutritionRouteImport } from './routes/nutrition'
+import { Route as MeasurementsRouteImport } from './routes/measurements'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as GoalsRouteImport } from './routes/goals'
+import { Route as CreatineRouteImport } from './routes/creatine'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WorkoutRoute = WorkoutRouteImport.update({
+  id: '/workout',
+  path: '/workout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupplementsRoute = SupplementsRouteImport.update({
+  id: '/supplements',
+  path: '/supplements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepCounterRoute = RepCounterRouteImport.update({
+  id: '/rep-counter',
+  path: '/rep-counter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NutritionRoute = NutritionRouteImport.update({
+  id: '/nutrition',
+  path: '/nutrition',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeasurementsRoute = MeasurementsRouteImport.update({
+  id: '/measurements',
+  path: '/measurements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GoalsRoute = GoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatineRoute = CreatineRouteImport.update({
+  id: '/creatine',
+  path: '/creatine',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +91,200 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/creatine': typeof CreatineRoute
+  '/goals': typeof GoalsRoute
+  '/history': typeof HistoryRoute
+  '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
+  '/nutrition': typeof NutritionRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
+  '/supplements': typeof SupplementsRoute
+  '/workout': typeof WorkoutRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/creatine': typeof CreatineRoute
+  '/goals': typeof GoalsRoute
+  '/history': typeof HistoryRoute
+  '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
+  '/nutrition': typeof NutritionRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
+  '/supplements': typeof SupplementsRoute
+  '/workout': typeof WorkoutRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/creatine': typeof CreatineRoute
+  '/goals': typeof GoalsRoute
+  '/history': typeof HistoryRoute
+  '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
+  '/nutrition': typeof NutritionRoute
+  '/planner': typeof PlannerRoute
+  '/progress': typeof ProgressRoute
+  '/rep-counter': typeof RepCounterRoute
+  '/settings': typeof SettingsRoute
+  '/supplements': typeof SupplementsRoute
+  '/workout': typeof WorkoutRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/creatine'
+    | '/goals'
+    | '/history'
+    | '/library'
+    | '/measurements'
+    | '/nutrition'
+    | '/planner'
+    | '/progress'
+    | '/rep-counter'
+    | '/settings'
+    | '/supplements'
+    | '/workout'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/creatine'
+    | '/goals'
+    | '/history'
+    | '/library'
+    | '/measurements'
+    | '/nutrition'
+    | '/planner'
+    | '/progress'
+    | '/rep-counter'
+    | '/settings'
+    | '/supplements'
+    | '/workout'
+  id:
+    | '__root__'
+    | '/'
+    | '/creatine'
+    | '/goals'
+    | '/history'
+    | '/library'
+    | '/measurements'
+    | '/nutrition'
+    | '/planner'
+    | '/progress'
+    | '/rep-counter'
+    | '/settings'
+    | '/supplements'
+    | '/workout'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CreatineRoute: typeof CreatineRoute
+  GoalsRoute: typeof GoalsRoute
+  HistoryRoute: typeof HistoryRoute
+  LibraryRoute: typeof LibraryRoute
+  MeasurementsRoute: typeof MeasurementsRoute
+  NutritionRoute: typeof NutritionRoute
+  PlannerRoute: typeof PlannerRoute
+  ProgressRoute: typeof ProgressRoute
+  RepCounterRoute: typeof RepCounterRoute
+  SettingsRoute: typeof SettingsRoute
+  SupplementsRoute: typeof SupplementsRoute
+  WorkoutRoute: typeof WorkoutRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/workout': {
+      id: '/workout'
+      path: '/workout'
+      fullPath: '/workout'
+      preLoaderRoute: typeof WorkoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/supplements': {
+      id: '/supplements'
+      path: '/supplements'
+      fullPath: '/supplements'
+      preLoaderRoute: typeof SupplementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rep-counter': {
+      id: '/rep-counter'
+      path: '/rep-counter'
+      fullPath: '/rep-counter'
+      preLoaderRoute: typeof RepCounterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nutrition': {
+      id: '/nutrition'
+      path: '/nutrition'
+      fullPath: '/nutrition'
+      preLoaderRoute: typeof NutritionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/measurements': {
+      id: '/measurements'
+      path: '/measurements'
+      fullPath: '/measurements'
+      preLoaderRoute: typeof MeasurementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goals': {
+      id: '/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof GoalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creatine': {
+      id: '/creatine'
+      path: '/creatine'
+      fullPath: '/creatine'
+      preLoaderRoute: typeof CreatineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +297,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CreatineRoute: CreatineRoute,
+  GoalsRoute: GoalsRoute,
+  HistoryRoute: HistoryRoute,
+  LibraryRoute: LibraryRoute,
+  MeasurementsRoute: MeasurementsRoute,
+  NutritionRoute: NutritionRoute,
+  PlannerRoute: PlannerRoute,
+  ProgressRoute: ProgressRoute,
+  RepCounterRoute: RepCounterRoute,
+  SettingsRoute: SettingsRoute,
+  SupplementsRoute: SupplementsRoute,
+  WorkoutRoute: WorkoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
