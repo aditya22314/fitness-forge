@@ -15,6 +15,7 @@ import { Route as RepCounterRouteImport } from './routes/rep-counter'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as NutritionRouteImport } from './routes/nutrition'
+import { Route as MeasurementsRouteImport } from './routes/measurements'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as CreatineRouteImport } from './routes/creatine'
@@ -50,6 +51,11 @@ const NutritionRoute = NutritionRouteImport.update({
   path: '/nutrition',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MeasurementsRoute = MeasurementsRouteImport.update({
+  id: '/measurements',
+  path: '/measurements',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/creatine': typeof CreatineRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
   '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/creatine': typeof CreatineRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
   '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/creatine': typeof CreatineRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/measurements': typeof MeasurementsRoute
   '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/creatine'
     | '/history'
     | '/library'
+    | '/measurements'
     | '/nutrition'
     | '/planner'
     | '/progress'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/creatine'
     | '/history'
     | '/library'
+    | '/measurements'
     | '/nutrition'
     | '/planner'
     | '/progress'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/creatine'
     | '/history'
     | '/library'
+    | '/measurements'
     | '/nutrition'
     | '/planner'
     | '/progress'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   CreatineRoute: typeof CreatineRoute
   HistoryRoute: typeof HistoryRoute
   LibraryRoute: typeof LibraryRoute
+  MeasurementsRoute: typeof MeasurementsRoute
   NutritionRoute: typeof NutritionRoute
   PlannerRoute: typeof PlannerRoute
   ProgressRoute: typeof ProgressRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NutritionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/measurements': {
+      id: '/measurements'
+      path: '/measurements'
+      fullPath: '/measurements'
+      preLoaderRoute: typeof MeasurementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/library': {
       id: '/library'
       path: '/library'
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreatineRoute: CreatineRoute,
   HistoryRoute: HistoryRoute,
   LibraryRoute: LibraryRoute,
+  MeasurementsRoute: MeasurementsRoute,
   NutritionRoute: NutritionRoute,
   PlannerRoute: PlannerRoute,
   ProgressRoute: ProgressRoute,
