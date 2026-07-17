@@ -13,6 +13,7 @@ import { Route as WorkoutRouteImport } from './routes/workout'
 import { Route as RepCounterRouteImport } from './routes/rep-counter'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as NutritionRouteImport } from './routes/nutrition'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as IndexRouteImport } from './routes/index'
@@ -37,6 +38,11 @@ const PlannerRoute = PlannerRouteImport.update({
   path: '/planner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NutritionRoute = NutritionRouteImport.update({
+  id: '/nutrition',
+  path: '/nutrition',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LibraryRoute = LibraryRouteImport.update({
   id: '/library',
   path: '/library',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/history': typeof HistoryRoute
   '/library': typeof LibraryRoute
+  '/nutrition': typeof NutritionRoute
   '/planner': typeof PlannerRoute
   '/progress': typeof ProgressRoute
   '/rep-counter': typeof RepCounterRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/history'
     | '/library'
+    | '/nutrition'
     | '/planner'
     | '/progress'
     | '/rep-counter'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/history'
     | '/library'
+    | '/nutrition'
     | '/planner'
     | '/progress'
     | '/rep-counter'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/history'
     | '/library'
+    | '/nutrition'
     | '/planner'
     | '/progress'
     | '/rep-counter'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HistoryRoute: typeof HistoryRoute
   LibraryRoute: typeof LibraryRoute
+  NutritionRoute: typeof NutritionRoute
   PlannerRoute: typeof PlannerRoute
   ProgressRoute: typeof ProgressRoute
   RepCounterRoute: typeof RepCounterRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nutrition': {
+      id: '/nutrition'
+      path: '/nutrition'
+      fullPath: '/nutrition'
+      preLoaderRoute: typeof NutritionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/library': {
       id: '/library'
       path: '/library'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HistoryRoute: HistoryRoute,
   LibraryRoute: LibraryRoute,
+  NutritionRoute: NutritionRoute,
   PlannerRoute: PlannerRoute,
   ProgressRoute: ProgressRoute,
   RepCounterRoute: RepCounterRoute,
