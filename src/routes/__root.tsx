@@ -9,7 +9,11 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import appCss from "../styles.css?url";
+import appCssUrl from "../styles.css?url";
+// Dev proxy strips the browser's `Accept: text/css` header, so Vite's
+// content-negotiation returns the JS HMR wrapper instead of CSS and the
+// preview renders unstyled. `?direct` forces the raw CSS response.
+const appCss = import.meta.env.DEV ? `${appCssUrl}?direct` : appCssUrl;
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
