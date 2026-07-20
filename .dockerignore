@@ -1,0 +1,16 @@
+node_modules
+.output
+dist
+.wrangler
+.vercel
+.lovable
+.git
+.github
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage
+.vscode
+.idea
