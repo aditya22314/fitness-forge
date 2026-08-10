@@ -1,7 +1,8 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Dumbbell, Home, Library, ListChecks, LineChart, History, Apple, Pill, Settings as SettingsIcon, Target, Ruler, Zap } from "lucide-react";
+import { Dumbbell, Home, Library, ListChecks, LineChart, History, Apple, Pill, Settings as SettingsIcon, Target, Ruler, Zap, Cloud, CloudOff, RefreshCw, Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCloudSync } from "@/lib/useCloudSync";
 
 const primaryNav = [
   { to: "/", label: "Home", icon: Home },
@@ -23,6 +24,7 @@ const moreNav = [
 export function AppLayout({ children }: { children?: ReactNode }) {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
+  const { status } = useCloudSync();
 
   return (
     <div className="min-h-dvh w-full flex text-foreground">
@@ -50,6 +52,9 @@ export function AppLayout({ children }: { children?: ReactNode }) {
             <NavItem key={n.to} to={n.to} label={n.label} icon={n.icon} active={isActive(n.to)} />
           ))}
         </NavGroup>
+        <div className="mt-auto px-3 py-2">
+          <SyncBadge status={status} />
+        </div>
       </aside>
 
       <main className="flex-1 min-w-0 pb-24 lg:pb-8">
