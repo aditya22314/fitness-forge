@@ -4,7 +4,7 @@ import { useStore } from "./store";
 import { useAuth } from "./useAuth";
 import { loadCloudData, saveCloudData } from "./sync.functions";
 
-const TS_KEY = "gym-tracker-updated-at";
+const tsKey = (uid: string) => `gym-tracker-updated-at:${uid}`;
 
 /** Keys of the store that represent user data (actions and live session excluded). */
 const DATA_KEYS = [
@@ -28,14 +28,14 @@ function snapshot(): Snapshot {
   return out;
 }
 
-function localTs(): number {
+function localTs(uid: string): number {
   if (typeof window === "undefined") return 0;
-  const v = window.localStorage.getItem(TS_KEY);
+  const v = window.localStorage.getItem(tsKey(uid));
   return v ? Number(v) || 0 : 0;
 }
 
-export function markLocalChange() {
-  if (typeof window !== "undefined") window.localStorage.setItem(TS_KEY, String(Date.now()));
+function setLocalTs(uid: string, ts: number) {
+  if (typeof window !== "undefined") window.localStorage.setItem(tsKey(uid), String(ts));
 }
 
 export type SyncStatus = "idle" | "syncing" | "synced" | "offline" | "error";
@@ -62,17 +62,16 @@ export function useCloudSync() {
       try {
         const cloud = await load();
         if (cancelled) return;
-        const mine = localTs();
+        const mine = localTs(user.id);
         if (cloud && cloud.clientUpdatedAt > mine) {
           useStore.getState().importData(JSON.parse(cloud.json));
-          if (typeof window !== "undefined")
-            window.localStorage.setItem(TS_KEY, String(cloud.clientUpdatedAt));
+          setLocalTs(user.id, cloud.clientUpdatedAt);
         } else {
           const ts = mine || Date.now();
           const serialized = JSON.stringify(snapshot());
           await save({ data: { json: serialized, clientUpdatedAt: ts } });
           lastPushed.current = serialized;
-          if (typeof window !== "undefined") window.localStorage.setItem(TS_KEY, String(ts));
+          setLocalTs(user.id, ts);
         }
         if (!cancelled) {
           readyRef.current = true;
@@ -104,7 +103,7 @@ export function useCloudSync() {
       save({ data: { json: serialized, clientUpdatedAt: ts } })
         .then(() => {
           lastPushed.current = serialized;
-          if (typeof window !== "undefined") window.localStorage.setItem(TS_KEY, String(ts));
+          setLocalTs(uid, ts);
           setStatus("synced");
         })
         .catch((e) => {
@@ -112,8 +111,8 @@ export function useCloudSync() {
           setStatus("offline");
         });
     };
+    const uid = user.id;
     const unsub = useStore.subscribe(() => {
-      markLocalChange();
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(push, 1200);
     });
