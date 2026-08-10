@@ -64,14 +64,14 @@ export function useCloudSync() {
         if (cancelled) return;
         const mine = localTs();
         if (cloud && cloud.clientUpdatedAt > mine) {
-          useStore.getState().importData(cloud.data);
+          useStore.getState().importData(JSON.parse(cloud.json));
           if (typeof window !== "undefined")
             window.localStorage.setItem(TS_KEY, String(cloud.clientUpdatedAt));
         } else {
           const ts = mine || Date.now();
-          const payload = snapshot();
-          await save({ data: { data: payload, clientUpdatedAt: ts } });
-          lastPushed.current = JSON.stringify(payload);
+          const serialized = JSON.stringify(snapshot());
+          await save({ data: { json: serialized, clientUpdatedAt: ts } });
+          lastPushed.current = serialized;
           if (typeof window !== "undefined") window.localStorage.setItem(TS_KEY, String(ts));
         }
         if (!cancelled) {
@@ -97,12 +97,11 @@ export function useCloudSync() {
     if (!user) return;
     const push = () => {
       if (!readyRef.current) return;
-      const payload = snapshot();
-      const serialized = JSON.stringify(payload);
+      const serialized = JSON.stringify(snapshot());
       if (serialized === lastPushed.current) return;
       const ts = Date.now();
       setStatus("syncing");
-      save({ data: { data: payload, clientUpdatedAt: ts } })
+      save({ data: { json: serialized, clientUpdatedAt: ts } })
         .then(() => {
           lastPushed.current = serialized;
           if (typeof window !== "undefined") window.localStorage.setItem(TS_KEY, String(ts));

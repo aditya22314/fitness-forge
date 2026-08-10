@@ -108,3 +108,19 @@ function NavItem({ to, label, icon: Icon, active }: { to: string; label: string;
     </Link>
   );
 }
+function SyncBadge({ status }: { status: import("@/lib/useCloudSync").SyncStatus }) {
+  const map = {
+    idle: { icon: Cloud, text: "Local only", cls: "text-muted-foreground" },
+    syncing: { icon: RefreshCw, text: "Syncing…", cls: "text-muted-foreground animate-pulse" },
+    synced: { icon: Check, text: "Synced to cloud", cls: "text-primary" },
+    offline: { icon: CloudOff, text: "Offline — saved locally", cls: "text-amber-400" },
+    error: { icon: CloudOff, text: "Sync error", cls: "text-destructive" },
+  } as const;
+  const { icon: Icon, text, cls } = map[status];
+  return (
+    <div className={cn("flex items-center gap-2 text-[11px]", cls)}>
+      <Icon className="h-3.5 w-3.5" />
+      {text}
+    </div>
+  );
+}
