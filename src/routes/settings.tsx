@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { wipeCloudData } from "@/lib/sync.functions";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({ meta: [{ title: "Settings — Iron" }] }),
@@ -14,6 +16,7 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const { settings, setSettings, clearAll, history, importData } = useStore();
+  const wipeCloud = useServerFn(wipeCloudData);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -123,7 +126,16 @@ function SettingsPage() {
 
       <GlassCard>
         <div className="font-semibold mb-2 text-destructive">Danger zone</div>
-        <button onClick={() => { if (confirm("Erase all data?")) { clearAll(); toast("All data cleared"); } }} className="px-3 py-2 rounded-md border border-destructive/40 text-destructive text-sm">Clear all data</button>
+        <button onClick={async () => {
+          if (!confirm("Erase all data? This also clears your cloud backup.")) return;
+          clearAll();
+          try {
+            if (user) await wipeCloud();
+            toast("All data cleared");
+          } catch {
+            toast("Local data cleared (cloud wipe failed)");
+          }
+        }} className="px-3 py-2 rounded-md border border-destructive/40 text-destructive text-sm">Clear all data</button>
       </GlassCard>
     </AppLayout>
   );
