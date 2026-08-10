@@ -1,7 +1,8 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { Dumbbell, Home, Library, ListChecks, LineChart, History, Apple, Pill, Settings as SettingsIcon, Target, Ruler, Zap } from "lucide-react";
+import { Dumbbell, Home, Library, ListChecks, LineChart, History, Apple, Pill, Settings as SettingsIcon, Target, Ruler, Zap, Cloud, CloudOff, RefreshCw, Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useCloudSync } from "@/lib/useCloudSync";
 
 const primaryNav = [
   { to: "/", label: "Home", icon: Home },
@@ -23,6 +24,7 @@ const moreNav = [
 export function AppLayout({ children }: { children?: ReactNode }) {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
+  const { status } = useCloudSync();
 
   return (
     <div className="min-h-dvh w-full flex text-foreground">
@@ -50,6 +52,9 @@ export function AppLayout({ children }: { children?: ReactNode }) {
             <NavItem key={n.to} to={n.to} label={n.label} icon={n.icon} active={isActive(n.to)} />
           ))}
         </NavGroup>
+        <div className="mt-auto px-3 py-2">
+          <SyncBadge status={status} />
+        </div>
       </aside>
 
       <main className="flex-1 min-w-0 pb-24 lg:pb-8">
@@ -101,5 +106,21 @@ function NavItem({ to, label, icon: Icon, active }: { to: string; label: string;
       <Icon className="h-4 w-4" />
       {label}
     </Link>
+  );
+}
+function SyncBadge({ status }: { status: import("@/lib/useCloudSync").SyncStatus }) {
+  const map = {
+    idle: { icon: Cloud, text: "Local only", cls: "text-muted-foreground" },
+    syncing: { icon: RefreshCw, text: "Syncing…", cls: "text-muted-foreground animate-pulse" },
+    synced: { icon: Check, text: "Synced to cloud", cls: "text-primary" },
+    offline: { icon: CloudOff, text: "Offline — saved locally", cls: "text-amber-400" },
+    error: { icon: CloudOff, text: "Sync error", cls: "text-destructive" },
+  } as const;
+  const { icon: Icon, text, cls } = map[status];
+  return (
+    <div className={cn("flex items-center gap-2 text-[11px]", cls)}>
+      <Icon className="h-3.5 w-3.5" />
+      {text}
+    </div>
   );
 }
