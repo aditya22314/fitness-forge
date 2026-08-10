@@ -113,6 +113,7 @@ export function useCloudSync() {
     };
     const uid = user.id;
     const unsub = useStore.subscribe(() => {
+      setLocalTs(uid, Date.now());
       if (timerRef.current) clearTimeout(timerRef.current);
       timerRef.current = setTimeout(push, 1200);
     });
